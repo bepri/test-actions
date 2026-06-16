@@ -1,0 +1,24 @@
+name: Pack rock
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pack rock
+        id: pack
+        uses: canonical/craft-actions/rockcraft-pack@work/refactor-common-components/CRAFT-5201
+
+      - name: Upload rock artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rock
+          path: ${{ steps.pack.outputs.rock }}
